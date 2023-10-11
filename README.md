@@ -2,7 +2,7 @@
 
 Welcome to the Color Palette, an essential tool for web developers and designers. This app helps you save time and effortlessly manage your color palette by storing and organizing your colors. The app also has session restoration.
 
-![Alt text](<Screenshot from 2023-10-11 13-55-39.png>)
+![Alt text](<screenshot/screenshot.png>)
 
 ## Introduction
 
