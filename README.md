@@ -13,7 +13,7 @@ The Color Palette is a Python-based application that simplifies color management
 To get started with the Color Palette App, follow these simple steps:
 
 1. Clone the repository: `git clone https://github.com/art3mistical/color-palette.git`
-2. Install the required Python packages: `pip install PyQt5`
+2. Install the required Python packages: `pip install -r requirements.txt`
 3. Run the app: `python3 main.py`
 4. Start organizing your color palette with ease!
 
