@@ -1,9 +1,9 @@
 import sys
 import os
 import json
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QColorDialog, QLabel, QMenu, QGridLayout, QAction
-from PyQt5.QtGui import QColor
-from PyQt5.QtCore import Qt, QStandardPaths
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QColorDialog, QLabel, QMenu, QGridLayout
+from PyQt6.QtGui import QColor, QAction
+from PyQt6.QtCore import Qt, QStandardPaths
 
 class ColorPaletteApp(QMainWindow):
     def __init__(self):
@@ -70,7 +70,7 @@ class ColorPaletteApp(QMainWindow):
 
         def context_menu_handler(event):
             # Handle right-click context menu for color items
-            if event.button() == Qt.RightButton:
+            if event.button() == Qt.MouseButton.RightButton:
                 context_menu = QMenu(self)
                 hex_action = context_menu.addAction("Copy HEX")
                 rgb_action = context_menu.addAction("Copy RGBA")
@@ -80,7 +80,7 @@ class ColorPaletteApp(QMainWindow):
                 rgb_action.triggered.connect(lambda: self.copy_to_clipboard(str(color.getRgb())))
                 remove_action.triggered.connect(lambda: self.remove_color(color, color_widget))
 
-                context_menu.exec_(event.globalPos())
+                context_menu.exec(event.globalPosition().toPoint())
 
         color_widget.mousePressEvent = context_menu_handler
 
@@ -124,7 +124,7 @@ class ColorPaletteApp(QMainWindow):
 
     def get_session_data_path(self):
         # Get the path for storing session data (JSON file)
-        documents_dir = QStandardPaths.writableLocation(QStandardPaths.DocumentsLocation)
+        documents_dir = QStandardPaths.writableLocation(QStandardPaths.StandardLocation.DocumentsLocation)
         app_data_dir = os.path.join(documents_dir, "ColorPalette_data")
         os.makedirs(app_data_dir, exist_ok=True)
         return os.path.join(app_data_dir, "session_data.json")
@@ -148,9 +148,10 @@ class ColorPaletteApp(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
+    app.setStyle('Fusion')
     main_window = ColorPaletteApp()
     main_window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
