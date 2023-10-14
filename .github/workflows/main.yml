@@ -1,29 +1,53 @@
-name: Build with PyInstaller for Windows
+name: Build with PyInstaller
 
 on: [push]
 
 jobs:
-  build:
+  windows:
     runs-on: windows-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
 
-    - name: Install dependencies
-      run: pip install pyinstaller pyqt6
+      - name: Install dependencies
+        run: pip install pyinstaller pyqt6
 
-    - name: Build with PyInstaller
-      run: pyinstaller --onefile main.py
-      working-directory: ${{ github.workspace }}
+      - name: Build for Windows
+        run: pyinstaller --onefile main.py
+        working-directory: ${{ github.workspace }}
 
-    - name: Upload executable
-      uses: actions/upload-artifact@v2
-      with:
-        name: color_palette
-        path: dist/main.exe
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: color_palette_windows
+          path: dist/main.exe
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install pyinstaller pyqt6
+
+      - name: Build for macOS
+        run: pyinstaller --onefile main.py
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload macOS executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: color_palette_macos
+          path: dist/main
+
