@@ -10,7 +10,14 @@ The Color Palette is a Python-based application that simplifies color management
 
 ## Getting Started
 
-To get started with the Color Palette App, follow these simple steps:
+
+To quickly get started with the Color Palette app, you can download the pre-built binaries for your platform:
+
+- [Download the Windows executable (.exe)](https://github.com/ART3MISTICAL/color-palette/releases/download/v0.1.0/color_palette.exe)
+- [Download the macOS application (.dmg)](https://github.com/ART3MISTICAL/color-palette/releases/download/v0.1.0/color_palette_mac.dmg)
+- [Download the Linux binary (.bin)](https://github.com/ART3MISTICAL/color-palette/releases/download/v0.1.0/color_palette_linux.bin)
+
+Alternatively, if you prefer to run the app from the source code, follow these steps:
 
 1. Clone the repository: `git clone https://github.com/art3mistical/color-palette.git`
 2. Install the required Python packages: `pip install -r requirements.txt`
