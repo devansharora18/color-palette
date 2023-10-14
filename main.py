@@ -1,9 +1,16 @@
 import sys
 import os
 import json
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QColorDialog, QLabel, QMenu, QGridLayout
-from PyQt6.QtGui import QColor, QAction
-from PyQt6.QtCore import Qt, QStandardPaths
+try :
+    from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QColorDialog, QLabel, QMenu, QGridLayout, QFileDialog
+    from PyQt6.QtGui import QColor, QAction
+    from PyQt6.QtCore import Qt, QStandardPaths
+except :
+    print("Error with PyOt6")
+    print("Initiating PyQt5")
+    from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QColorDialog, QLabel, QMenu, QGridLayout, QAction, QFileDialog
+    from PyQt5.QtGui import QColor
+    from PyQt5.QtCore import Qt, QStandardPaths
 
 class ColorPaletteApp(QMainWindow):
     def __init__(self):
@@ -13,7 +20,6 @@ class ColorPaletteApp(QMainWindow):
         self.color_widgets = []  # List to store color widgets
 
         self.initUI()
-        self.load_session_data()
 
     def initUI(self):
         # Set up the main window
@@ -25,16 +31,42 @@ class ColorPaletteApp(QMainWindow):
 
         self.layout = QVBoxLayout(self.central_widget)
         self.color_layout = QGridLayout()
+        self.options_layout = QGridLayout()
 
+        self.layout.addLayout(self.options_layout)
+        self.layout.addLayout(self.color_layout)
+        
+        # + button
         self.add_color_button = QPushButton("+")
         self.add_color_button.setMaximumWidth(50)
         self.add_color_button.setMaximumHeight(50)
         self.add_color_button.setStyleSheet("font-size: 20px;")
-
         self.add_color_button.clicked.connect(self.show_color_dialog)
+        self.options_layout.addWidget(self.add_color_button, 0, 0)
+ 
+        # New button
+        self.add_new_button = QPushButton("New")
+        self.add_new_button.setMaximumWidth(100)
+        self.add_new_button.setMaximumHeight(50)
+        self.add_new_button.setStyleSheet("font-size: 20px;")
+        self.add_new_button.clicked.connect(self.clean_layout)
+        self.options_layout.addWidget(self.add_new_button, 0, 1)
 
-        self.layout.addWidget(self.add_color_button)
-        self.layout.addLayout(self.color_layout)
+        # Save button
+        self.add_save_button = QPushButton("Save")
+        self.add_save_button.setMaximumWidth(100)
+        self.add_save_button.setMaximumHeight(50)
+        self.add_save_button.setStyleSheet("font-size: 20px;")
+        self.add_save_button.clicked.connect(self.save_color_palette)
+        self.options_layout.addWidget(self.add_save_button, 0, 2)
+
+        # Load button
+        self.add_load_button = QPushButton("Load")
+        self.add_load_button.setMaximumWidth(100)
+        self.add_load_button.setMaximumHeight(50)
+        self.add_load_button.setStyleSheet("font-size: 20px;")
+        self.add_load_button.clicked.connect(self.load_color_palette)
+        self.options_layout.addWidget(self.add_load_button, 0, 3)
 
     def show_color_dialog(self):
         # Show a color dialog to select a color
@@ -89,6 +121,16 @@ class ColorPaletteApp(QMainWindow):
         clipboard = QApplication.clipboard()
         clipboard.setText(value)
 
+    def clean_layout(self):
+        # removes all the colors from the layout
+        # a new empty layout
+        for i in reversed(range(self.color_layout.count())): 
+                widget = self.color_layout.itemAt(i).widget()
+                if widget: widget.deleteLater()
+            
+        self.color_widgets = []
+        self.color_palette = []
+
     def remove_color(self, color, color_widget):
         # Remove a color from the palette and UI
         self.color_palette.remove(color)
@@ -115,9 +157,13 @@ class ColorPaletteApp(QMainWindow):
             self.color_palette.append(color)
             self.add_color_to_ui(color)
 
-    def save_session_data(self):
+    def save_session_data(self, path = None):
         # Save the session data (color palette) to a JSON file
-        session_data_path = self.get_session_data_path()
+        if path :
+            session_data_path = path
+        else : 
+            session_data_path = self.get_session_data_path()
+
         data = [color.name() for color in self.color_palette]
         with open(session_data_path, 'w') as f:
             json.dump(data, f)
@@ -129,9 +175,17 @@ class ColorPaletteApp(QMainWindow):
         os.makedirs(app_data_dir, exist_ok=True)
         return os.path.join(app_data_dir, "session_data.json")
 
-    def load_session_data(self):
+    def load_session_data(self, path = None):
         # Load session data (color palette) from a JSON file
-        session_data_path = self.get_session_data_path()
+        if path :
+            session_data_path = path
+        else:
+            session_data_path = self.get_session_data_path()
+
+        if path : # if a specified path is given to load 
+                  # clean the layout
+            self.clean_layout()
+
         try:
             with open(session_data_path, 'r') as f:
                 data = json.load(f)
@@ -139,7 +193,21 @@ class ColorPaletteApp(QMainWindow):
                     self.color_palette.append(QColor(color))
                     self.add_color_to_ui(QColor(color))
         except (FileNotFoundError, json.JSONDecodeError):
-            pass
+            print("An Error While Loading the Color Palette")
+
+    def save_color_palette(self):
+        # save the instance of color palette into a json file at specified path
+        save_path = QFileDialog.getSaveFileName(self, "Save Color palette", self.get_session_data_path(), 'All Files (*.*)')
+
+        if save_path != ("", "") :
+            self.save_session_data(path = save_path[0])
+
+    def load_color_palette(self):
+        # load the color palette data fom a specified json file
+        load_path = QFileDialog.getOpenFileName(self, "Save Color palette", self.get_session_data_path(), 'JSON (*.json)')
+
+        if load_path != ("", "") :
+            self.load_session_data(path = load_path[0])
 
     def closeEvent(self, event):
         # Save session data and close the application
