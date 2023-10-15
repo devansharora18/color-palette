@@ -1,12 +1,13 @@
 # Color Palette
 
-Welcome to the Color Palette, an essential tool for web developers and designers. This app helps you save time and effortlessly manage your color palette by storing and organizing your colors. The app also has session restoration.
+Welcome to the Color Palette, an essential tool for web developers and designers. This app helps you save time and effortlessly manage your color palette by storing and organizing your colors.
 
-![image](https://github.com/ART3MISTICAL/color-pallete/assets/68769374/95c158d2-9e13-4371-a541-f2617b345e30)
+![image](https://github.com/ART3MISTICAL/color-palette/assets/68769374/cb55052d-0ff9-40ca-860f-9f33897048fb)
+
 
 ## Introduction
 
-The Color Palette is a Python-based application that simplifies color management. It offers a user-friendly interface for adding, organizing, and copying colors. With session data storage, you can conveniently restore your color palette from previous sessions.
+The Color Palette is a Python-based application that simplifies color management. It offers a user-friendly interface for adding, organizing, and copying colors. You can also conveniently save and laod different color palettes according to your workflow.
 
 ## Getting Started
 
@@ -39,9 +40,6 @@ Alternatively, if you prefer to run the app from the source code, follow these s
 3. Click the "+" button to add more colors or right-click to remove colors.
 4. The grid layout adjusts as you add or remove colors.
 
-## To Be Added
-
-Currently only the previous session is restored and the functionality to save different palletes to reuse them will be added in the future.
 
 ## Contribution Guidelines
 
