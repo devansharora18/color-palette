@@ -113,6 +113,8 @@ class ColorPaletteApp(QMainWindow):
                 remove_action.triggered.connect(lambda: self.remove_color(color, color_widget))
 
                 context_menu.exec(event.globalPosition().toPoint())
+            elif event.button() == Qt.MouseButton.LeftButton:
+                self.copy_to_clipboard(color.name())
 
         color_widget.mousePressEvent = context_menu_handler
 
