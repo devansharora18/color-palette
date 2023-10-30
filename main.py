@@ -84,7 +84,7 @@ class ColorPaletteApp(QMainWindow):
         color_block = QLabel()
         color_block.setMaximumSize(200, 200)
         color_block.setMinimumSize(100, 100)
-        color_block.setStyleSheet(f"background-color: {color.name()};")
+        color_block.setStyleSheet(f"background-color: {color.name()}; border-radius: 10px;")
 
         hex_label = QLabel(color.name())
         hex_label.setStyleSheet("font-size: 20px;")
