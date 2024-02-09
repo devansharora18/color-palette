@@ -2,7 +2,8 @@
 
 Welcome to the Color Palette, an essential tool for web developers and designers. This app helps you save time and effortlessly manage your color palette by storing and organizing your colors.
 
-![image](https://github.com/ART3MISTICAL/color-palette/assets/68769374/cb55052d-0ff9-40ca-860f-9f33897048fb)
+![image](https://github.com/ART3MISTICAL/color-palette/assets/68769374/ef144703-6c64-42f5-b986-9109292444eb)
+
 
 
 ## Introduction
@@ -31,6 +32,7 @@ Alternatively, if you prefer to run the app from the source code, follow these s
 2. You can add colors to your palette by clicking the "+" button.
 3. Colors are organized in a grid layout based on your color count.
 4. Right-clicking a color block opens a context menu to copy color values or remove the color.
+5. Left click automatically copies the hex color code
 
 
 ## Example Usage
