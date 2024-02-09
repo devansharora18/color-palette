@@ -51,3 +51,27 @@ jobs:
           name: color_palette_macos
           path: dist/main
 
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install pyinstaller pyqt6
+
+      - name: Build for linux
+        run: pyinstaller --onefile main.py
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload linux executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: color_palette_linux
+          path: dist/main
+
