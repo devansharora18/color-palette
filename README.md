@@ -2,13 +2,13 @@
 
 Welcome to the Color Palette, an essential tool for web developers and designers. This app helps you save time and effortlessly manage your color palette by storing and organizing your colors.
 
-![image](https://github.com/ART3MISTICAL/color-palette/assets/68769374/ef144703-6c64-42f5-b986-9109292444eb)
+![alt text](image.png)
 
 
 
 ## Introduction
 
-The Color Palette is a Python-based application that simplifies color management. It offers a user-friendly interface for adding, organizing, and copying colors. You can also conveniently save and laod different color palettes according to your workflow.
+The Color Palette is a Python-based application that simplifies color management. It offers a user-friendly interface for adding, organizing, importing and copying colors. You can also conveniently save and laod different color palettes according to your workflow. You can import colors directly from a css file. 
 
 ## Getting Started
 
@@ -33,6 +33,7 @@ Alternatively, if you prefer to run the app from the source code, follow these s
 3. Colors are organized in a grid layout based on your color count.
 4. Right-clicking a color block opens a context menu to copy color values or remove the color.
 5. Left click automatically copies the hex color code
+6. You can import colors directly from a file
 
 
 ## Example Usage
@@ -41,6 +42,7 @@ Alternatively, if you prefer to run the app from the source code, follow these s
 2. Right-click the added color to copy its HEX or RGBA values.
 3. Click the "+" button to add more colors or right-click to remove colors.
 4. The grid layout adjusts as you add or remove colors.
+5. Click the import button to import colors from a css/html/js file
 
 
 ## Contribution Guidelines

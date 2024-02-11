@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+import re
 try :
     from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QColorDialog, QLabel, QMenu, QGridLayout, QFileDialog
     from PyQt6.QtGui import QColor, QAction
@@ -20,6 +21,30 @@ class ColorPaletteApp(QMainWindow):
         self.color_widgets = []  # List to store color widgets
 
         self.initUI()
+        
+    def import_colors_from_files(self):
+        file_dialog = QFileDialog(self)
+        files, _ = file_dialog.getOpenFileNames(self, "Select Files to Import Colors", "", "Text Files (*.css *.json *js *html *jsx *ts *tsx);;All Files (*)")
+
+        for file_path in files:
+            self.scan_and_import_colors(file_path)
+
+    def scan_and_import_colors(self, file_path):
+        try:
+            with open(file_path, 'r') as file:
+                content = file.read()
+
+                # Extract color codes using regular expression
+                color_codes = re.findall(r'#(?:[0-9a-fA-F]{3}){1,2}\b', content)
+
+                for code in color_codes:
+                    color = QColor(code)
+                    self.color_palette.append(color)
+                    self.add_color_to_ui(color)
+
+        except (FileNotFoundError, PermissionError, UnicodeDecodeError):
+            print(f"Error scanning and importing colors from {file_path}")
+
 
     def initUI(self):
         # Set up the main window
@@ -67,6 +92,14 @@ class ColorPaletteApp(QMainWindow):
         self.add_load_button.setStyleSheet("font-size: 20px;")
         self.add_load_button.clicked.connect(self.load_color_palette)
         self.options_layout.addWidget(self.add_load_button, 0, 3)
+
+        # Import button
+        self.import_colors_button = QPushButton("Import")
+        self.import_colors_button.setMaximumWidth(100)
+        self.import_colors_button.setMaximumHeight(50)
+        self.import_colors_button.setStyleSheet("font-size: 20px;")
+        self.import_colors_button.clicked.connect(self.import_colors_from_files)
+        self.options_layout.addWidget(self.import_colors_button, 0, 4)
 
     def show_color_dialog(self):
         # Show a color dialog to select a color
